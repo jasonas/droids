@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+	<!--
+
+	Droids.ai v0.0.1 | September 2023
+
+	-->
+	<meta charset="utf-8">
+	<title>Droids.ai</title>
+	<meta content="Droids.ai" name="description"/>
+	<meta content="droids.ai, droids, robot simulation, evolutionary computation, genetic algorithm, artificial life, artificial intelligence" name="keywords"/>
+	<meta content="Droids.ai" name="application-name"/>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<!-- Third-party libs - 3D renderer engine: Three.js -->
+	<script src="./third_party_libs/three/three_r128.js"></script>
+	<script src="./third_party_libs/three/OrbitControls.js"></script>
+	<script src="./third_party_libs/three/RoundedBoxGeometry.js"></script>
+
+	<!-- Third-party libs - Physics engine: Ammo.js -->
+	<script src="./third_party_libs/ammo/ammo.js"></script>
+	
+	<!-- Droids scripts  -->
+	<script src="./scripts/droids.js?v=85"></script>
+	<script src="./scripts/droids_renderer.js?v=85"></script>
+	<script src="./scripts/droids_ga.js?v=85"></script>
+	
+	<!-- Droid classes  -->
+	<script src="./scripts/classes/droid_genome.js?v=85"></script>
+	<script src="./scripts/classes/droid_robot.js?v=85"></script>
+	<script src="./scripts/classes/droid_population.js?v=85"></script>
+	
+	<!-- Droids styles -->
+	<link type="text/css" rel="stylesheet" href="./css/styles.css?v=1">
+	
+</head>
+<body>
+
+	<!-- File import hidden elements  -->
+	<input style="display: none;" id="importFile" type="file" accept="text/urdf" hidden/>
+	<input style="display: none;" id="importGenome" type="file" accept="text/csv" hidden/>
+
+	<!-- File import hidden element listeners  -->
+	<script>
+		document.getElementById('importFile').addEventListener('change', importedXML, false );
+		document.getElementById('importGenome').addEventListener('change', importedCSV, false );
+	</script>
+
+	<!-- Droids HTML UI  -->
+	<div id="simPane" class="simPane">
+		<a href="#" onClick="startAmmo(); return false;">Start</a>
+		<a href="#" onClick="pause(); return false;">Pause</a>
+		<a href="#" onClick="play(); return false;">Play</a>
+		<a href="#" onClick="reset(); return false;">Reset</a>
+		<a href="#" onClick="makeDroidBase(); return false;">Base Droid</a>
+		<a href="#" onClick="makeDroidRandom(); return false;">Random Droid</a>
+		<a href="#" onClick="exportDroid(); return false;">Export URDF</a>
+		<a href="#" onClick="importDroid(); return false;">Import URDF</a>
+		<a href="#" onClick="exportGenome(); return false;">Export Genome</a>
+		<a href="#" onClick="importGenome(); return false;">Import Genome</a>
+		<a href="#" onClick="runSimulation(); return false;">Run Sim</a>
+		<p>&nbsp;</p>
+		<p><strong>Sim Live Data</strong></p>
+		<p>Sim Time: <span id="simTime">0</span></p>
+		<p>Droid Pos: <span id="botPos">(0,0,0)</span></p>
+		<p>Droid Travelled: <span id="botDis">0</span></p>
+		<p>&nbsp;</p>
+		<p><strong>Sim Log</strong></p>
+		<p><span id="simLog">- Sim not started</span></p> 
+		<p><span id="imageLog"></span></p> 
+	</div>
+
+	<div id="gaPane" class="gaPane">
+		<p>Population Size</p>
+		<p><input type="number" id="popSize" name="popSize" value="2"></p>
+		<p>Seconds Per Trial</p>
+		<p><input type="number" id="trialSeconds" name="trialSeconds" value="2"></p>
+		<p>Evolutions</p>
+		<p><input type="number" id="evoSize" name="evoSize" value="2"></p>
+		<p>&nbsp;</p>
+		<p>Mutation Values</p>
+		<p>Size mutation rate: <input type="number" id="mutateSizeRate" name="mutateSizeRate" value="3"></p>
+		<p>Size mutation amount: <input type="number" id="mutateSizeAmount" name="mutateSizeAmount" value="1.25"></p>
+		<p>Flexibility mutation rate: <input type="number" id="mutateFlexRate" name="mutateFlexRate" value="3"></p>
+		<p>Flexibility mutation amount: <input type="number" id="mutateFlexAmount" name="mutateFlexAmount" value="1.25"></p>
+		<p>&nbsp;</p>
+		<a href="#" onClick="runGA(); return false;">Run GA</a>
+		<p>&nbsp;</p>
+		<p><strong>GA Live Data</strong></p>
+		<p>Evolution: <span id="evoRun">0</span></p>
+		<p>&nbsp;</p>
+		<p><strong>GA Log</strong></p>
+		<p><span id="gaLog">- GA not started</span></p> 
+	</div>
+
+    </body>
+</html>

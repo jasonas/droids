@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Unit Tests</title>
+	
+	<script src="./../scripts/classes/droid_genome.js?v=4"></script>
+	<script src="./../scripts/classes/droid_robot.js?v=4"></script>
+	
+</head>
+<body>
+	
+	<p>Open the JavaScript console to view unit test assertions</p>
+	
+<script>
+	
+	// Unit Test 1 - Can get a robot droid
+	function test_1(){
+		
+		let test_title = "Unit Test 1";
+		let test_for = 'Can get a robot droid';
+		let test_genome = new Droid_Genome();
+		
+		let test_decodedGenes = [
+			0.5, 3000, 1500, 1, 
+			0.5, 5000, 2000, -1,
+			0.5, 2000, 2500, 1,
+			0.5, 4000, 3000, -1,
+			0.4, 0.3, 0.2,
+			0.2, 0.0, 0.28, 
+			1, 1, 0.5,
+			1, 1, 1, 1,
+			0.5
+		];
+
+		let test_encodedGenes = test_genome.encodeGenes(test_decodedGenes, test_genome.geneSpec);
+
+		let test_droidRobot = new Droid_Robot(test_encodedGenes, test_genome);
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert(test_droidRobot, "%o", { test_title , test_for });	
+		console.log(test_droidRobot);
+	}
+	// Run test
+	test_1();
+	
+	
+	// Unit Test 2 - Robot droid has encoded genes
+	function test_2(){
+		
+		let test_title = "Unit Test 2";
+		let test_for = 'Robot droid has encoded genes';
+		let test_genome = new Droid_Genome();
+		
+		let test_decodedGenes = [
+			0.5, 3000, 1500, 1, 
+			0.5, 5000, 2000, -1,
+			0.5, 2000, 2500, 1,
+			0.5, 4000, 3000, -1,
+			0.4, 0.3, 0.2,
+			0.2, 0.0, 0.28, 
+			1, 1, 0.5,
+			1, 1, 1, 1,
+			0.5
+		];
+
+		let test_encodedGenes = test_genome.encodeGenes(test_decodedGenes, test_genome.geneSpec);
+
+		let test_droidRobot = new Droid_Robot(test_encodedGenes, test_genome);
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert(test_droidRobot.encodedGenes, "%o", { test_title , test_for });	
+		console.log(test_droidRobot.encodedGenes);
+	}
+	// Run test
+	test_2();
+	
+	
+	// Unit Test 3 - Robot droid has decoded genes
+	function test_3(){
+		
+		let test_title = "Unit Test 3";
+		let test_for = 'Robot droid has decoded genes';
+		let test_genome = new Droid_Genome();
+		
+		let test_decodedGenes = [
+			0.5, 3000, 1500, 1, 
+			0.5, 5000, 2000, -1,
+			0.5, 2000, 2500, 1,
+			0.5, 4000, 3000, -1,
+			0.4, 0.3, 0.2,
+			0.2, 0.0, 0.28, 
+			1, 1, 0.5,
+			1, 1, 1, 1,
+			0.5
+		];
+
+		let test_encodedGenes = test_genome.encodeGenes(test_decodedGenes, test_genome.geneSpec);
+
+		let test_droidRobot = new Droid_Robot(test_encodedGenes, test_genome);
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert(test_droidRobot.genesDecoded, "%o", { test_title , test_for });	
+		console.log(test_droidRobot.genesDecoded);
+	}
+	// Run test
+	test_3();
+	
+	
+	// Unit Test 4 - Robot droid has a phenotype
+	function test_4(){
+		
+		let test_title = "Unit Test 4";
+		let test_for = 'Robot droid has a phenotype';
+		let test_genome = new Droid_Genome();
+		
+		let test_decodedGenes = [
+			0.5, 3000, 1500, 1, 
+			0.5, 5000, 2000, -1,
+			0.5, 2000, 2500, 1,
+			0.5, 4000, 3000, -1,
+			0.4, 0.3, 0.2,
+			0.2, 0.0, 0.28, 
+			1, 1, 0.5,
+			1, 1, 1, 1,
+			0.5
+		];
+
+		let test_encodedGenes = test_genome.encodeGenes(test_decodedGenes, test_genome.geneSpec);
+
+		let test_droidRobot = new Droid_Robot(test_encodedGenes, test_genome);
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert(test_droidRobot.phenotype, "%o", { test_title , test_for });	
+		console.log(test_droidRobot.phenotype);
+	}
+	// Run test
+	test_4();
+	
+	
+	// Unit Test 5 - The Robot droid's phenotype contatins 'set' values that are strictly within genespec ranges
+	function test_5(){
+		
+		let test_title = "Unit Test 5";
+		let test_for = 'Phenotype contatins setting values within genespec ranges';
+		let test_genome = new Droid_Genome();
+		
+		let test_decodedGenes = [
+			0.5, 3000, 1500, 1, 
+			0.5, 5000, 2000, -1,
+			0.5, 2000, 2500, 1,
+			0.5, 4000, 3000, -1,
+			0.4, 0.3, 0.2,
+			0.2, 0.0, 0.28, 
+			1, 1, 0.5,
+			1, 1, 1, 1,
+			0.5
+		];
+
+		let test_encodedGenes = test_genome.encodeGenes(test_decodedGenes, test_genome.geneSpec);
+
+		let test_droidRobot = new Droid_Robot(test_encodedGenes, test_genome);
+		
+		let test_geneSpecExample_usingRanges_min = test_droidRobot.genome.geneSpec.servo_leg_left.angleRange.min;
+		let test_geneSpecExample_usingRanges_max = test_droidRobot.genome.geneSpec.servo_leg_left.angleRange.max;
+		let test_phenotypeExample_usingRanges_setting = test_droidRobot.phenotype.servo_leg_left.angleRange.set;
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert( 
+			(test_phenotypeExample_usingRanges_setting >= test_geneSpecExample_usingRanges_min && test_phenotypeExample_usingRanges_setting <= test_geneSpecExample_usingRanges_max)
+			, "%o", { test_title , test_for });	
+		
+		console.log(test_geneSpecExample_usingRanges_min);
+		console.log(test_geneSpecExample_usingRanges_max);
+		console.log(test_phenotypeExample_usingRanges_setting);
+	}
+	// Run test
+	test_5();
+	
+	
+	// Unit Test 6 - The Robot droid's phenotype contatins 'set' values that are strictly within genespec options
+	function test_6(){
+		
+		let test_title = "Unit Test 6";
+		let test_for = 'Phenotype contatins setting values within genespec options';
+		let test_genome = new Droid_Genome();
+		
+		let test_decodedGenes = [
+			0.5, 3000, 1500, 1, 
+			0.5, 5000, 2000, -1,
+			0.5, 2000, 2500, 1,
+			0.5, 4000, 3000, -1,
+			0.4, 0.3, 0.2,
+			0.2, 0.0, 0.28, 
+			1, 1, 0.5,
+			1, 1, 1, 1,
+			0.5
+		];
+
+		let test_encodedGenes = test_genome.encodeGenes(test_decodedGenes, test_genome.geneSpec);
+
+		let test_droidRobot = new Droid_Robot(test_encodedGenes, test_genome);
+		
+		let test_geneSpecExample_usingOptions_options = test_droidRobot.genome.geneSpec.servo_leg_left.startDirection.options;
+		let test_phenotypeExample_usingOptions_setting = test_droidRobot.phenotype.servo_leg_left.startDirection.set;
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert( 
+			(test_phenotypeExample_usingOptions_setting == test_geneSpecExample_usingOptions_options[0] || 
+			test_phenotypeExample_usingOptions_setting == test_geneSpecExample_usingOptions_options[1])
+			, "%o", { test_title , test_for });	
+		
+		console.log(test_geneSpecExample_usingOptions_options);
+		console.log(test_phenotypeExample_usingOptions_setting);
+	}
+	// Run test
+	test_6();
+	
+	
+</script>
+	
+</body>
+</html>
