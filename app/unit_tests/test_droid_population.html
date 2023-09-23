@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Unit Tests</title>
+	
+	<script src="./../scripts/classes/droid_genome.js?v=3"></script>
+	<script src="./../scripts/classes/droid_population.js?v=3"></script>
+	
+</head>
+<body>
+	
+	<p>Open the JavaScript console to view unit test assertions</p>
+	
+	<input id="mutateSizeRate" type="hidden" value="0">
+	<input id="mutateSizeAmount" type="hidden" value="1">
+	<input id="mutateFlexRate" type="hidden" value="0">
+	<input id="mutateFlexAmount" type="hidden" value="1">
+	
+<script>
+	
+	// Unit Test 1 - Can get a population
+	function test_1(){
+		
+		let test_title = "Unit Test 1";
+		let test_for = 'Can get a population';
+		let test_genome = new Droid_Genome();
+		let test_population = new Population(test_genome, 3); // Make 3 Droids
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert(test_population, "%o", { test_title , test_for });	
+		console.log(test_population);
+	}
+	// Run test
+	test_1();
+	
+	
+	// Unit Test 2 - Can get fitness scores
+	function test_2(){
+		
+		let test_title = "Unit Test 2";
+		let test_for = 'Can get fitness scores';
+		let test_genome = new Droid_Genome();
+		
+		let test_population = new Population(test_genome, 10); // Make 10 Droids, TravelledDistance = 0 by default
+		test_population.droids[0].travelledDistance = 2000; // This one is the fittest
+		test_population.droids[1].travelledDistance = 1000; // This one is the next fittest
+		
+		let test_fitnessScores = test_population.getFitnessScores(test_population.droids);
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert(test_fitnessScores, "%o", { test_title , test_for });	
+		console.log(test_fitnessScores);
+	}
+	// Run test
+	test_2();
+	
+	
+	// Unit Test 3 - Can get a fitness map
+	function test_3(){
+		
+		let test_title = "Unit Test 3";
+		let test_for = 'Can get a fitness map';
+		let test_genome = new Droid_Genome();
+		let test_population = new Population(test_genome, 3); // Make 3 Droids
+		
+		let test_scores = [1, 2, 3, 4, 5];
+		let test_fitmap = test_population.getFitnessMap(test_scores);
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert(test_fitmap, "%o", { test_title , test_for });
+		console.log(test_fitmap);
+	}
+	// Run test
+	test_3();
+	
+	
+	// Unit Test 4 - Can get a parent ID using a 'roulette wheel' selection with a weighted distribution
+	function test_4(){
+		
+		let test_title = "Unit Test 4";
+		let test_for = 'Can get parent ID using weighted distribution';
+		let test_genome = new Droid_Genome();
+		let test_population = new Population(test_genome, 3); // Make 3 Droids
+		
+		let test_scores = [1, 1, 1, 1000, 1];
+		let test_fitmap = test_population.getFitnessMap(test_scores);
+		let test_parent_id = test_population.selectParent(test_fitmap);
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert(test_parent_id || test_parent_id === 0, "%o", { test_title , test_for });  
+		console.log(test_parent_id);
+	}
+	// Run test
+	test_4();
+	
+	
+	// Unit Test 5 - Can evolve a population using a weighted distribution in favour of the fittest 
+	function test_5(){
+		
+		let test_title = "Unit Test 5";
+		let test_for = 'Can evolve a population with weighted distribution';
+		let test_genome = new Droid_Genome();
+		
+		let test_populationA = new Population(test_genome, 10); // Make 10 Droids, TravelledDistance = 0 by default
+		test_populationA.droids[0].travelledDistance = 1000; // This one is now the fittest
+		
+		let test_populationB = new Population(test_genome, 10, 1, test_populationA); // Make 10 new Droids
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert(test_populationB, "%o", { test_title , test_for });
+		console.log(test_populationA);
+		console.log(test_populationB);
+	}
+	// Run test
+	test_5();
+	
+	
+</script>
+	
+</body>
+</html>

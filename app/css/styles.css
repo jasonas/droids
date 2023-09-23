@@ -1,0 +1,58 @@
+@charset "UTF-8";
+/* CSS Document */
+
+body { 
+	margin: 0; 
+}
+
+html{ 
+	color: #fff; 
+	text-decoration: none; 
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif"; 
+	text-shadow: 1px 1px rgba(0,0,0,0.2);
+}
+
+a{ 
+	color: #fff; 
+	text-decoration: none; 
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif"; 
+	text-shadow: 1px 1px rgba(0,0,0,0.2); 
+	background-color: rgba(0,0,0,0.4); 
+	border-radius: 4px; 
+	padding: 8px 12px 8px 12px; 
+	font-size: 12px;
+	margin: 6px; 
+	margin-right: 0px; 
+	display: inline-block; 
+}
+
+p{
+	margin: 6px;
+}
+
+.simPane{
+	position: absolute; display: block; width: 350px; height: calc(100% - 60px); padding: 6px; top:20px; left: 20px; background-color: rgba(0,0,0,0.3); border-radius: 10px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.photoContainer{
+	width: 100px;
+	height: 80px;
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin: 2px;
+	display: inline-block;
+	border: 1px solid #fff;
+}
+
+.gaPane{
+	position: absolute; display: block; width: 350px; height: calc(100% - 60px); padding: 6px; top:20px; right: 20px; background-color: rgba(0,0,0,0.3); border-radius: 10px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+input{
+	width: 70px;
+}
