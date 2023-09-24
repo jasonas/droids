@@ -1,0 +1,259 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Unit Tests</title>
+
+	<script src="./../scripts/classes/droid_genome.js?v=3"></script>
+	
+</head>
+<body>
+	
+	<p>Open the JavaScript console to view unit test assertions</p>
+	
+<script>
+	
+	
+	// Unit Test 1 - Can get the geneone
+	function test_1(){
+		
+		let test_title = "Unit Test 1";
+		let test_for = 'Can get the geneone';
+		
+		let test_genome = new Droid_Genome();
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert( test_genome, "%o", { test_title , test_for });	
+		console.log(test_genome);
+	}
+	// Run test
+	test_1();
+	
+	
+	// Unit Test 2 - Can get the genespec
+	function test_2(){
+		
+		let test_title = "Unit Test 2";
+		let test_for = 'Can get the genespec';
+		let test_genome = new Droid_Genome();
+		
+		let test_genespec = test_genome.createPhenotype(null, true);
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert( test_genespec, "%o", { test_title , test_for });
+		console.log(test_genespec);
+	}
+	// Run test
+	test_2();
+	
+	
+	// Unit Test 3 - Genespec has links
+	function test_3(){
+		
+		let test_title = "Unit Test 3";
+		let test_for = 'Genespec has links';
+		let test_genome = new Droid_Genome();
+		
+		let test_genespec = test_genome.createPhenotype(null, true);
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert( test_genespec.body && test_genespec.legs && test_genespec.feet, "%o", { test_title , test_for });
+		console.log(test_genespec.body);
+	}
+	// Run test
+	test_3();
+	
+	
+	// Unit Test 4 - Genespec describes expected values
+	function test_4(){
+		
+		let test_title = "Unit Test 4";
+		let test_for = 'Genespec describes expected values';
+		let test_genome = new Droid_Genome();
+		
+		let test_genespec = test_genome.createPhenotype(null, true);
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert( test_genespec.body.width.setType , "%o", { test_title , test_for });
+		console.log(test_genespec.body.width.setType);
+	}
+	// Run test
+	test_4();
+	
+	
+	// Unit Test 5 - Can get random genes
+	function test_5(){
+		
+		let test_title = "Unit Test 5";
+		let test_for = 'Can get a random genes';
+		let test_genome = new Droid_Genome();
+		
+		let test_randomGenes = test_genome.getRandomGenes(10);
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert( test_randomGenes , "%o", { test_title , test_for });
+		console.log(test_randomGenes);
+	}
+	// Run test
+	test_5();
+	
+	
+	// Unit Test 6 - Can encode genes
+	function test_6(){
+		
+		let test_title = "Unit Test 6";
+		let test_for = 'Can encode genes';
+		let test_genome = new Droid_Genome();
+		let test_genespec = test_genome.createPhenotype(null, true);
+		let test_randomGenes = test_genome.getRandomGenes(30);
+		
+		let test_encodeGenes = test_genome.encodeGenes(test_randomGenes, test_genespec);
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert(test_encodeGenes , "%o", { test_title , test_for });
+		console.log(test_encodeGenes);
+	}
+	// Run test
+	test_6();
+	
+	
+	// Unit Test 7 - Can decode genes
+	function test_7(){
+		
+		let test_title = "Unit Test 7";
+		let test_for = 'Can decode genes';
+		let test_genome = new Droid_Genome();
+		let test_genespec = test_genome.createPhenotype(null, true);
+		let test_randomGenes = test_genome.getRandomGenes(30);
+		let test_encodeGenes = test_genome.encodeGenes(test_randomGenes, test_genespec);
+		
+		let test_decodeGenes = test_genome.decodeGenes(test_encodeGenes, test_genespec);
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert(test_decodeGenes , "%o", { test_title , test_for });
+		console.log(test_decodeGenes);
+	}
+	// Run test
+	test_7();
+	
+	
+	// Unit Test 8 - Crossover mutation works
+	function test_8(){
+		
+		let test_title = "Unit Test 8";
+		let test_for = 'Crossover mutation works';
+		let test_genome = new Droid_Genome();
+		
+		let test_genesA = [1,1,1,1,1,1,1,1,1,1];
+		let test_genesB = [0,0,0,0,0,0,0,0,0,0];
+		let test_genesC = test_genome.crossover(test_genesA, test_genesB);
+		
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert(test_genesC, "%o", { test_title , test_for });
+		console.log(test_genesA);
+		console.log(test_genesB);
+		console.log(test_genesC);
+	}
+	// Run test
+	test_8();
+	
+	
+	// Unit Test 9 - Point mutation works
+	function test_9(){
+		
+		let test_title = "Unit Test 9";
+		let test_for = 'Point mutation works';
+		let test_genome = new Droid_Genome();
+		
+		let test_genesA = [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1];
+		let test_genesB = test_genome.pointMutate(test_genesA, 1, 1.25);
+
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert(test_genesB, "%o", { test_title , test_for });
+		console.log(test_genesA);
+		console.log(test_genesB);
+	}
+	// Run test
+	test_9();
+	
+	
+	// Unit Test 10 - Shrink size mutation works
+	function test_10(){
+		
+		let test_title = "Unit Test 10";
+		let test_for = 'Shrink size mutation works';
+		let test_genome = new Droid_Genome();
+		
+		let test_genesA = [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1];
+		let test_genesB = test_genome.shrinkSizeMutate(test_genesA, 1, 1.25);
+
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert(test_genesB, "%o", { test_title , test_for });
+		console.log(test_genesA);
+		console.log(test_genesB);
+	}
+	// Run test
+	test_10();
+	
+	
+	// Unit Test 11 - Grow size mutation works
+	function test_11(){
+		
+		let test_title = "Unit Test 11";
+		let test_for = 'Grow size mutation works';
+		let test_genome = new Droid_Genome();
+		
+		let test_genesA = [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1];
+		let test_genesB = test_genome.growSizeMutate(test_genesA, 1, 1.25);
+
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert(test_genesB, "%o", { test_title , test_for });
+		console.log(test_genesA);
+		console.log(test_genesB);
+	}
+	// Run test
+	test_11();
+	
+	
+	// Unit Test 12 - Increase flexibility mutation works
+	function test_12(){
+		
+		let test_title = "Unit Test 12";
+		let test_for = 'Increase flexibility mutation works';
+		let test_genome = new Droid_Genome();
+		
+		let test_genesA = [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1];
+		let test_genesB = test_genome.increaseFlexibilityMutate(test_genesA, 1, 1.25);
+
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert(test_genesB, "%o", { test_title , test_for });
+		console.log(test_genesA);
+		console.log(test_genesB);
+	}
+	// Run test
+	test_12();
+	
+	
+	// Unit Test 13 - Decrease flexibility mutation works
+	function test_13(){
+		
+		let test_title = "Unit Test 13";
+		let test_for = 'Decrease flexibility mutation works';
+		let test_genome = new Droid_Genome();
+		
+		let test_genesA = [0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1];
+		let test_genesB = test_genome.decreaseFlexibilityMutate(test_genesA, 1, 1.25);
+
+		console.log('\n\n'+test_title+': ' + test_for + '\n\n');
+		console.assert(test_genesB, "%o", { test_title , test_for });
+		console.log(test_genesA);
+		console.log(test_genesB);
+	}
+	// Run test
+	test_13();
+	
+	
+</script>
+	
+</body>
+</html>
