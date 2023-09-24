@@ -27,32 +27,36 @@ class Population{
 				let parentA_index = this.selectParent(fitnessMap);
 				let parentB_index = this.selectParent(fitnessMap);
 				
-				// A random choice from the two most likely fittest
-				/*
-				let randChoice = Math.floor(Math.random() * (2 - 1 + 1) + 1);
-				
-				if(randChoice==1){
-				   
-					// Got genes from parent a
-					encodedGenes = legacyPopulation.droids[parentA_index].encodedGenes;
-					
-				} else if(randChoice==2){ 
-			
-					// Got genes from parent b
-					encodedGenes = legacyPopulation.droids[parentB_index].encodedGenes;
-				}
-				*/
-				
-				// Then get the crossover from the two most likely fittest
-				let encodedGenes_crossover = _genome.crossover(legacyPopulation.droids[parentA_index].encodedGenes, legacyPopulation.droids[parentB_index].encodedGenes);
-				
-				// Then mutate it a bit 
-				let encodedGenes_mutation_1 = _genome.pointMutate(encodedGenes_crossover, 5, 1.25);
-				
+				// Get user Settings
+				let crossoverSetting = document.getElementById('crossoverSetting').checked;
+				let pointMutateRate = parseFloat(document.getElementById('pointMutateRate').value);
+				let pointMutateAmount = parseFloat(document.getElementById('pointMutateAmount').value);
 				let mutateSizeRate = parseFloat(document.getElementById('mutateSizeRate').value);
 				let mutateSizeAmount = parseFloat(document.getElementById('mutateSizeAmount').value);
 				let mutateFlexRate = parseFloat(document.getElementById('mutateFlexRate').value);
 				let mutateFlexAmount = parseFloat(document.getElementById('mutateFlexAmount').value);
+				
+				var encodedGenes_mutation_0;
+
+				if(crossoverSetting == true){
+				
+					// Then get the crossover from the two most likely fittest
+					let encodedGenes_crossover = _genome.crossover(legacyPopulation.droids[parentA_index].encodedGenes, legacyPopulation.droids[parentB_index].encodedGenes);
+					
+					encodedGenes_mutation_0 = encodedGenes_crossover;
+					console.log('Genese from crossover');
+					console.log(encodedGenes_mutation_0);
+					
+				} else {
+					
+					// Full genes from one 
+					encodedGenes_mutation_0 = legacyPopulation.droids[parentA_index].encodedGenes;
+					console.log('Genese from one');
+					console.log(encodedGenes_mutation_0);
+				}
+				
+				// Then mutate it a bit 
+				let encodedGenes_mutation_1 = _genome.pointMutate(encodedGenes_mutation_0, pointMutateRate, pointMutateAmount);
 				
 				// Then mutate it a bit more
 				let encodedGenes_mutation_2 = _genome.growSizeMutate(encodedGenes_mutation_1, mutateSizeRate, mutateSizeAmount);

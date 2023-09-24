@@ -22,17 +22,17 @@
 	<script src="./third_party_libs/ammo/ammo.js"></script>
 	
 	<!-- Droids scripts  -->
-	<script src="./scripts/droids.js?v=107"></script>
-	<script src="./scripts/droids_renderer.js?v=107"></script>
-	<script src="./scripts/droids_ga.js?v=107"></script>
+	<script src="./scripts/droids.js?v=200"></script>
+	<script src="./scripts/droids_renderer.js?v=200"></script>
+	<script src="./scripts/droids_ga.js?v=200"></script>
 	
 	<!-- Droid classes  -->
-	<script src="./scripts/classes/droid_genome.js?v=107"></script>
-	<script src="./scripts/classes/droid_robot.js?v=107"></script>
-	<script src="./scripts/classes/droid_population.js?v=107"></script>
+	<script src="./scripts/classes/droid_genome.js?v=200"></script>
+	<script src="./scripts/classes/droid_robot.js?v=200"></script>
+	<script src="./scripts/classes/droid_population.js?v=200"></script>
 	
 	<!-- Droids styles -->
-	<link type="text/css" rel="stylesheet" href="./css/styles.css?v=2">
+	<link type="text/css" rel="stylesheet" href="./css/styles.css?v=200">
 	
 </head>
 <body>
@@ -46,56 +46,142 @@
 		document.getElementById('importFile').addEventListener('change', importedXML, false );
 		document.getElementById('importGenome').addEventListener('change', importedCSV, false );
 	</script>
+	
+	<!-- Background  -->
+	<div class="background"><h1>Droids.ai</h1></div>
 
-	<!-- Droids HTML UI  -->
-	<div id="simPane" class="simPane">
-		<a href="#" onClick="startAmmo(); return false;">Start</a>
-		<a href="#" onClick="pause(); return false;">Pause</a>
-		<a href="#" onClick="play(); return false;">Play</a>
-		<a href="#" onClick="reset(); return false;">Reset</a>
-		<a href="#" onClick="makeDroidBase(); return false;">Base Droid</a>
-		<a href="#" onClick="makeDroidRandom(); return false;">Random Droid</a>
-		<a href="#" onClick="exportDroid(); return false;">Export URDF</a>
-		<a href="#" onClick="importDroid(); return false;">Import URDF</a>
-		<a href="#" onClick="exportGenome(); return false;">Export Genome</a>
-		<a href="#" onClick="importGenome(); return false;">Import Genome</a>
-		<a href="#" onClick="runSimulation(); return false;">Run Sim</a>
-		<p>&nbsp;</p>
-		<p><strong>Sim Live Data</strong></p>
-		<p>Sim Time: <span id="simTime">0</span></p>
-		<p>Droid Pos: <span id="botPos">(0,0,0)</span></p>
-		<p>Droid Travelled: <span id="botDis">0</span></p>
-		<p>&nbsp;</p>
-		<p><strong>Sim Log</strong></p>
-		<p><span id="simLog">- Sim not started</span></p> 
-		<p>&nbsp;</p>
-		<p><strong>Photo Booth</strong></p>
-		<p><span id="imageLog">- No photos</span></p> 
+	<!-- UI nav menu  -->
+	<div id="nav" class="nav">
+		<div class="navButtons">
+			<a href="#" onClick="runGA(); return false;">Run Simulation &rang;</a>
+			<a href="#" onClick="makeDroidBase(); return false;">Load Demo Droid</a>
+			<a href="#" onClick="makeDroidRandom(); return false;">Load Random Droid</a>
+			<a href="#" onClick="importGenome(); return false;">Import CSV Genome</a>
+			<a href="#" onClick="importDroid(); return false;">Import URDF</a>
+			<a href="#" onClick="exportGenome(); return false;">Export CSV Genome</a>
+			<a href="#" onClick="exportDroid(); return false;">Export URDF</a>
+			<a href="#" onClick="toggleSettings(); return false;">Toggle Settings</a>
+			<a href="#" onClick="toggleLogs(); return false;">Toggle Logs</a>
+		</div>
 	</div>
-
-	<div id="gaPane" class="gaPane">
-		<p><strong>Evolution Lifespan Settings</strong></p>
-		<p>Population Size</p>
-		<p><input type="number" id="popSize" name="popSize" value="2"></p>
-		<p>Seconds Per Trial</p>
-		<p><input type="number" id="trialSeconds" name="trialSeconds" value="2"></p>
-		<p>Evolutions</p>
-		<p><input type="number" id="evoSize" name="evoSize" value="2"></p>
-		<p>&nbsp;</p>
-		<p><strong>Evolution Mutation Settings</strong></p>
-		<p>Size mutation rate: <input type="number" id="mutateSizeRate" name="mutateSizeRate" value="3"></p>
-		<p>Size mutation amount: <input type="number" id="mutateSizeAmount" name="mutateSizeAmount" value="1.25"></p>
-		<p>Flexibility mutation rate: <input type="number" id="mutateFlexRate" name="mutateFlexRate" value="3"></p>
-		<p>Flexibility mutation amount: <input type="number" id="mutateFlexAmount" name="mutateFlexAmount" value="1.25"></p>
-		<p>&nbsp;</p>
-		<a href="#" onClick="runGA(); return false;">Run GA</a>
-		<p>&nbsp;</p>
-		<p><strong>GA Live Data</strong></p>
-		<p>Evolution: <span id="evoRun">0</span></p>
-		<p>&nbsp;</p>
-		<p><strong>GA Log</strong></p>
-		<p><span id="gaLog">- GA not started</span></p> 
+	
+	<!-- Window panel: Genetic Algorithm Settings  -->
+	<div id="windowPanel_ga" class="windowPanel">
+		<div class="title">Genetic Algorithm Settings</div>
+		<div class="content">
+			<div class="settings">
+				<div class="row">
+					<span class="col_1">Population:</span>
+					<span class="col_2"><input type="number" id="popSize" name="popSize" value="5"> Droids</span>
+				</div>
+				<div class="row">
+					<span class="col_1">Trail time:</span>
+					<span class="col_2"><input type="number" id="trialSeconds" name="trialSeconds" value="20"> Seconds cap</span>
+				</div>
+				<div class="row">
+					<span class="col_1">Trial distance:</span>
+					<span class="col_2"><input type="number" id="trialDistance" name="trialDistance" value="30" disabled> Feet cap</span>
+				</div>
+				<div class="row">
+					<span class="col_1">Evolutions:</span>
+					<span class="col_2"><input type="number" id="evoSize" name="evoSize" value="10"> Generations</span>
+				</div>
+				<div class="row">
+					<span class="col_1">Trials end by:</span>
+					<span class="col_2">
+						Time <input type="radio" id="trialEndTime" name="trialEnd" checked> &nbsp;
+						Dist <input type="radio" id="trialEndDist" name="trialEnd" disabled>
+					</span>
+				</div>
+				<div class="note">* Distance is used to end trials if 'Dist' is selected for the 'end by'. Trials end if they exceed the max-time regardless.</div>
+			</div>
+		</div>
 	</div>
-
+	
+	<!-- Window panel: Genetic Mutation Settings  -->
+	<div id="windowPanel_mutate" class="windowPanel">
+		<div class="title">Genetic Mutation Settings</div>
+		<div class="content">
+			<div class="settings">
+				<div class="row">
+					<span class="col_1">Crossover:</span>
+					<span class="col_2">
+						<input type="checkbox" id="crossoverSetting" name="crossoverSetting" checked>
+					</span>
+				</div>
+				<div class="row">
+					<span class="col_1">Point mutate:</span>
+					<span class="col_2">
+						Rate <input type="number" id="pointMutateRate" name="pointMutateRate" value="3"> 
+						By <input type="number" id="pointMutateAmount" name="pointMutateAmount" value="1.25"> 
+					</span>
+				</div>
+				<div class="row">
+					<span class="col_1">Size mutate:</span>
+					<span class="col_2">
+						Rate <input type="number" id="mutateSizeRate" name="mutateSizeRate" value="3"> 
+						By <input type="number" id="mutateSizeAmount" name="mutateSizeAmount" value="1.25"> 
+					</span>
+				</div>
+				<div class="row">
+					<span class="col_1">Flex mutate:</span>
+					<span class="col_2">
+						Rate <input type="number" id="mutateFlexRate" name="mutateFlexRate" value="3"> 
+						By <input type="number" id="mutateFlexAmount" name="mutateFlexAmount" value="1.25"> 
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Window panel: Cross-Species Evolution  -->
+	<div id="windowPanel_species" class="windowPanel">
+		<div class="title">Cross-Species Evolution</div>
+		<div class="content">
+			<div class="species">
+				Biped <input type="checkbox" id="species_1" name="species" value="time" checked disabled> &nbsp;
+				Quadruped <input type="checkbox" id="species_2" name="species" checked disabled> &nbsp;
+				Hexapod <input type="checkbox" id="species_3" name="species" checked disabled>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Window panel: Live Simulation Log  -->
+	<div id="windowPanel_simLog" class="windowPanel">
+		<div class="title">Live Simulation Log</div>
+		<div class="content">
+			<div class="dataStream">
+				<div class="row">
+					<span class="col_1">Sim Time (sec):</span>
+					<span id="simTime" class="col_2">0</span>
+				</div>
+				<div class="row">
+					<span class="col_1">Droid Pos (x,y,z):</span>
+					<span id="botPos" class="col_2">(0,0,0)</span>
+				</div>
+				<div class="row">
+					<span class="col_1">Droid Travelled:</span>
+					<span id="botDis" class="col_2">0</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Window panel: Genetic Algorithm Log  -->
+	<div id="windowPanel_gaLog" class="windowPanel">
+		<div class="title">Genetic Algorithm Log</div>
+		<div class="content">
+			<div id="gaLog" class="dataLog">- GA not started</div>
+		</div>
+	</div>
+	
+	<!-- Window panel: Photo Booth Log  -->
+	<div id="windowPanel_photoBooth" class="windowPanel">
+		<div class="title">Photo Booth Log</div>
+		<div class="content">
+			<div id="imageLog" class="photoBooth"></div>
+		</div>
+	</div>
+	
     </body>
 </html>

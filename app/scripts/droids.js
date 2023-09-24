@@ -3,7 +3,9 @@
 // Droids - Main Script
 var scriptsLoaded = false;
 
-//let genome;
+// UI
+var panelsLeft = false;
+var panelsRight = false;
 
 // Required as a global for the renderer
 var droidRobot;
@@ -11,6 +13,7 @@ var droidRobot;
 // Provides the option to quickly look back at interesting Droids
 var memoryStore_droidPopulation = []; 
 var memoryStore_eliteDroids = []; 
+
 
 ///////////////////  Quick View Functions /////////////////////////
 
@@ -21,7 +24,7 @@ function makeDroidBase(){
 		reset();
 	}
 	
-	let baseDroid_decodedGenes = [
+	let demoDroid_decodedGenes = [
 		0.5, 3000, 1500, 1, 
 		0.5, 5000, 2000, -1,
 		0.5, 2000, 2500, 1,
@@ -30,11 +33,11 @@ function makeDroidBase(){
 		0.2, 0.0, 0.28, 
 		1, 1, 0.5,
 		1, 1, 1, 1,
-		0.0
+		0.53
 	];
 	
 	let genome = new Droid_Genome();
-	let encodedGenes = genome.encodeGenes(baseDroid_decodedGenes, genome.geneSpec);
+	let encodedGenes = genome.encodeGenes(demoDroid_decodedGenes, genome.geneSpec);
 	
 	droidRobot = new Droid_Robot(encodedGenes, genome);
 	
@@ -82,7 +85,6 @@ function loadDroidFromPopulation(droidPolulationId){
 	startAmmo();
 }
 
-
 // Make and load a droid from genes stored in a population elites pool
 function loadDroidFromPopulationElites(droidPolulationId){
 	
@@ -100,111 +102,6 @@ function loadDroidFromPopulationElites(droidPolulationId){
 	}
 	
 	startAmmo();
-}
-
-
-// Simulation without evolutions
-function runSimulation(){
-	
-	// Quick view settings
-	let populationSize = 3;
-	let secondsInSimPerDroid = 5;
-	
-	let droidPopulation = new Population(genome, populationSize);
-	
-	// Memory store
-	memoryStore_droidPopulation = droidPopulation;
-	
-	processSimulation(droidPopulation, secondsInSimPerDroid);
-	
-	// Clear the image log 
-	document.getElementById('imageLog').innerHTML = "<div>Photos of current population:</div><br>";
-}
-
-function processSimulation(_population, secondsInSimPerDroid){
-
-	function updateSimLog(){
-		
-		// Clear the sim log
-		document.getElementById('simLog').innerHTML = "";
-		
-		// Clear the image log
-		document.getElementById('imageLog').innerHTML = "<div>Photos of current population:</div><br>";
-		
-		for(let droidInd in _population.droids){
-		
-			let lifeExperience = _population.droids[droidInd];
-
-			let droidNumber = parseInt(droidInd)+1;
-			
-			let droidButton = '<a href="#" onClick="loadDroidFromPopulation('+droidInd+')">Load</div>';
-			
-			document.getElementById('simLog').innerHTML += "<div>Droid: "+ droidNumber +" | Travelled: "+lifeExperience.travelledDistance.toFixed(2).toString()+" | "+ droidButton +"</div>";
-			
-			// Display the Droid's photo
-			if(lifeExperience.photo != null){ 
-				let photoContainer = document.createElement("div");
-				photoContainer.setAttribute("class", "photoContainer");
-				photoContainer.style.backgroundImage = "url('"+ lifeExperience.photo +"'";
-				document.getElementById('imageLog').appendChild(photoContainer);
-			}
-		}
-	}
-	
-	function droidRun(_droids, droidNumber){
-		
-		let droidDNA = _droids[droidNumber];
-		
-		if(startedAmmo == true){
-			reset();
-		}
-		
-		let genome = new Droid_Genome();
-		let encodedGenes = genome.getRandomGenes(30);
-
-		droidRobot = new Droid_Robot(droidDNA.encodedGenes, genome);
-
-		setTimeout( function(){
-			startAmmo();
-		},100)
-		
-		
-		// Take a photo
-		setTimeout( function(){
-			droidDNA.photo = takePhoto();
-		},1500)
-		
-		setTimeout( function(){
-			
-			pause();
-			
-			droidDNA.travelledDistance = distance;
-			
-			updateSimLog();
-			
-			setTimeout( function(){
-				
-				droidNumber++;
-				
-				if(droidNumber<_droids.length){
-					
-					droidRun(_droids, droidNumber);
-					
-				} else {
-					
-					// Sim completed
-					alert('Simulation run completed!');
-				}
-				   
-			},500);
-			
-		}, secondsInSimPerDroid*1000)
-		
-	}
-				   
-	updateSimLog();
-	
-	droidRun(_population.droids, 0);
 }
 
 
@@ -264,7 +161,6 @@ function importedXML(e){
 	}
 }
 
-
 // CSV export
 function exportGenome(){
 	
@@ -320,6 +216,104 @@ function importedCSV(e){
 	}	
 }
 
+// Toggle UI
+function toggleUI(){
+	
+	let windowPanels = document.getElementsByClassName('windowPanel');
+	
+	for(let windowPanelInd in windowPanels){
+		
+		let windowPanel = windowPanels[windowPanelInd];
+		
+		if(windowPanel.style && windowPanel.style.opacity == 1){
+		   windowPanel.style.opacity = 0;
+		} else if(windowPanel.style) {
+		   windowPanel.style.opacity = 1;
+		}
+	}
+}
+
+// Toggle UI - Left side panels
+function toggleSettings(){
+	
+	if(window.innerWidth < 800){
+		if(panelsRight == true){
+			toggleLogs();
+		}
+	}
+	
+	if(panelsLeft == true){
+		
+		// Fade out
+		document.getElementById('windowPanel_ga').style.opacity = 0;
+		document.getElementById('windowPanel_mutate').style.opacity = 0;
+		document.getElementById('windowPanel_species').style.opacity = 0;
+		
+		// Remove
+		setTimeout( function(){
+			document.getElementById('windowPanel_ga').style.display = 'none';
+			document.getElementById('windowPanel_mutate').style.display = 'none';
+			document.getElementById('windowPanel_species').style.display = 'none';
+			panelsLeft = false;
+		},500)
+		
+	} else {
+		
+		// Display
+		document.getElementById('windowPanel_ga').style.display = 'block';
+		document.getElementById('windowPanel_mutate').style.display = 'block';
+		document.getElementById('windowPanel_species').style.display = 'block';
+		
+		// Fade in
+		setTimeout( function(){
+			document.getElementById('windowPanel_ga').style.opacity = 1;
+			document.getElementById('windowPanel_mutate').style.opacity = 1;
+			document.getElementById('windowPanel_species').style.opacity = 1;
+			panelsLeft = true;
+		},500)
+	}
+}
+
+// Toggle UI - Right side panels
+function toggleLogs(){
+	
+	if(window.innerWidth < 800){
+		if(panelsLeft == true){
+			toggleSettings();
+		}
+	}
+	 
+	if(panelsRight == true){
+		
+		// Fade out
+		document.getElementById('windowPanel_simLog').style.opacity = 0;
+		document.getElementById('windowPanel_gaLog').style.opacity = 0;
+		document.getElementById('windowPanel_photoBooth').style.opacity = 0;
+		
+		// Remove
+		setTimeout( function(){
+			document.getElementById('windowPanel_simLog').style.display = 'none';
+			document.getElementById('windowPanel_gaLog').style.display = 'none';
+			document.getElementById('windowPanel_photoBooth').display = 'none';
+			panelsRight = false;
+		},500)
+		
+	} else {
+		
+		// Display
+		document.getElementById('windowPanel_simLog').style.display = 'block';
+		document.getElementById('windowPanel_gaLog').style.display = 'block';
+		document.getElementById('windowPanel_photoBooth').style.display = 'block';
+		
+		// Fade in
+		setTimeout( function(){
+			document.getElementById('windowPanel_simLog').style.opacity = 1;
+			document.getElementById('windowPanel_gaLog').style.opacity = 1;
+			document.getElementById('windowPanel_photoBooth').style.opacity = 1;
+			panelsRight = true;
+		},500)
+	}
+}
 
 // Listen for the dom's ready state
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -330,7 +324,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		
 		console.log('Droids ready!');
 		
+		// Display the UI
+		if(window.innerWidth >= 1000){
+			setTimeout( function(){
+				// Lets stay hidden by default - for now (may change)
+				//toggleSettings();
+				//toggleLogs();
+			},1000)
+		}
+		
 		genome = new Droid_Genome();
 	}
 });
-

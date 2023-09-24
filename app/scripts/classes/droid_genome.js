@@ -82,7 +82,7 @@ class Droid_Genome{
 				"width": { "setType": "fixed", "set" : 0.18 }, 
 				"depth": { "setType": "fixed", "set" : 11111111 }, 
 				"height": { "setType": "variable-range", "min": 0.04, "max": 0.3, "set" : genesDecoded[20] },
-				"length": { "setType": "variable-range", "min": 0.1, "max": 0.6, "set" : genesDecoded[21] } 
+				"length": { "setType": "variable-range", "min": 0.1, "max": 0.8, "set" : genesDecoded[21] } 
 			},
 
 			"head" : { 
@@ -231,8 +231,9 @@ class Droid_Genome{
 
 			if(randomType=="option"){ 
 				
-				console.log("Options range: ");
-				console.log(range.length);
+				// Debug
+				//console.log("Options range: ");
+				//console.log(range.length);
 				
 				let choiceIndex = map(baseValue, [0.0, 1.0], [0, range.length]);
 				
@@ -306,6 +307,7 @@ class Droid_Genome{
 		let feet_size = linkFootLeft.childNodes[1].childNodes[1].childNodes[1].getAttribute("size");
 		let feet_sizes = feet_size.split(" ");
 		let feet_length = parseFloat(feet_sizes[1]); // The typical foot depth
+		let feet_height = parseFloat(feet_sizes[2]);
 		
 		// Get the joints
 		var joints = node.querySelectorAll("joint");
@@ -342,7 +344,7 @@ class Droid_Genome{
 			joint_foot_left_servoSettings.angleRange, joint_foot_left_servoSettings.motorstartdelay, joint_foot_left_servoSettings.motorfreqdelay, joint_foot_left_servoSettings.motorStartDirection, 
 			joint_foot_right_servoSettings.angleRange, joint_foot_right_servoSettings.motorstartdelay, joint_foot_right_servoSettings.motorfreqdelay, joint_foot_right_servoSettings.motorStartDirection, 
 			body_width, body_depth, body_height,
-			leg_length, 0.0, feet_length, 
+			leg_length, feet_height, feet_length, 
 			1, 1, 0.5,
 			1, 1, 1, 1,
 			0.5

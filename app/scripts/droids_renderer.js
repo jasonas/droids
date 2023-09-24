@@ -55,19 +55,15 @@ function start(){
 }
 
 function play(){
-	//console.log( renderer.info.render.frame );
 	renderFrame();
 }
 
 function pause(){
-	//console.log( renderer.info.render.frame );
 	cancelAnimationFrame( animationFrameId );
 	renderer.setAnimationLoop(null); // pause the animation
 }
 
 function reset(){
-
-	//console.log( renderer.info.render.frame );
 
 	cancelAnimationFrame( animationFrameId );
 	renderer.setAnimationLoop(null); // pause the animation
@@ -193,11 +189,11 @@ function setupGraphics(){
 
 	//create the scene
 	scene = new THREE.Scene();
-	scene.background = new THREE.Color( 0xededed );
+	scene.background = new THREE.Color( 0x222222 );
 
 	//create camera
 	camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.2, 5000 );
-	camera.position.set( 0, 30, 70 );
+	camera.position.set( 20, 30, -70 );
 	camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 	//Add hemisphere light
@@ -210,7 +206,7 @@ function setupGraphics(){
 	//Add directional light
 	let dirLight = new THREE.DirectionalLight( 0xffffff , 1);
 	dirLight.color.setHSL( 0.1, 1, 0.95 );
-	dirLight.position.set( -1, 1.75, 1 );
+	dirLight.position.set( 0, 1.75, -1 );
 	dirLight.position.multiplyScalar( 100 );
 	scene.add( dirLight );
 
@@ -230,7 +226,7 @@ function setupGraphics(){
 
 	//Setup the renderer
 	renderer = new THREE.WebGLRenderer( { antialias: true, preserveDrawingBuffer: true } );
-	renderer.setClearColor( 0xededed );
+	renderer.setClearColor( 0x222222 );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
@@ -297,7 +293,7 @@ function createFloor(){
 	let mass = 0;
 
 	//threeJS Section
-	let blockPlane = new THREE.Mesh(new THREE.BoxBufferGeometry(), new THREE.MeshPhongMaterial({color: 0xcdcdcd}));
+	let blockPlane = new THREE.Mesh(new THREE.BoxBufferGeometry(), new THREE.MeshPhongMaterial({color: 0x111111}));
 
 	blockPlane.position.set(pos.x, pos.y, pos.z);
 	blockPlane.scale.set(scale.x, scale.y, scale.z);
@@ -306,7 +302,14 @@ function createFloor(){
 	blockPlane.receiveShadow = true;
 
 	scene.add(blockPlane);
-
+	
+	// Wireframe
+	/*
+	var geo = new THREE.EdgesGeometry( blockPlane.geometry ); // or WireframeGeometry
+	var mat = new THREE.LineBasicMaterial( { color: 0xcccccc } );
+	var wireframe = new THREE.LineSegments( geo, mat );
+	blockPlane.add( wireframe );
+	*/
 
 	//Ammojs Section
 	let transform = new Ammo.btTransform();
@@ -435,7 +438,6 @@ function createRobotFromGenes(){
 
 	// Drop Location
 	let dropLocation = {x:0, y:10, z: 0};
-
 
 	// Styles	
 	let headStyle = droidRobot.phenotype.style.head.set;

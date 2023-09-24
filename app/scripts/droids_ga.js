@@ -7,10 +7,24 @@ function runGA(){
 	let populationSize = parseInt(document.getElementById('popSize').value);
 	let secondsInSimPerDroid = parseInt(document.getElementById('trialSeconds').value);
 	let numberOfEvolutions = parseInt(document.getElementById('evoSize').value);
-	let mutateSizeRate = parseFloat(document.getElementById('mutateSizeRate').value);
-	let mutateSizeAmount = parseFloat(document.getElementById('mutateSizeAmount').value);
-	let mutateFlexRate = parseFloat(document.getElementById('mutateFlexRate').value);
-	let mutateFlexAmount = parseFloat(document.getElementById('mutateFlexAmount').value);
+	let distInSimPerDroid = parseInt(document.getElementById('trialDistance').value);
+	
+	let trialEndTime = document.getElementById('trialEndTime').checked;
+	let trialEndDist = document.getElementById('trialEndDist').checked;
+	
+	// Species setting
+	let species_1 = document.getElementById('species_1').checked;
+	let species_2 = document.getElementById('species_2').checked;
+	let species_3 = document.getElementById('species_3').checked;
+	
+	// Trial by time or distance
+	var trialType = 1;
+	if(trialEndDist==true){
+		trialType = 2;
+	} else {
+		trialType = 1;
+	}
+	console.log('Tial Type: '+trialType);
 	
 	// Make a genesis population aka population zero
 	let droidPopulation = new Population(genome, populationSize);
@@ -27,7 +41,7 @@ function runGA(){
 	// Report to the UI log
 	document.getElementById('gaLog').innerHTML = "";
 	document.getElementById('gaLog').innerHTML += "- Starting evoltion 0 <br>";
-	document.getElementById('imageLog').innerHTML = "<div>Photos of elites from each population:</div>";
+	document.getElementById('imageLog').innerHTML = "<div class='photoBoothTip'>Elite Droids from each population</div>";
 }
 
 // Run simulation trails
@@ -36,7 +50,8 @@ function processGA(_population, secondsInSimPerDroid, numberOfEvolutions, curren
 	// Report to the UI log
 	function updateLogs(){
 		
-		document.getElementById('simLog').innerHTML = "<div>Latest population:</div><br>";
+		// This log panel has changed but lets keep this code for now
+		//document.getElementById('simLog').innerHTML = "<div>Latest population:</div><br>";
 		
 		for(let lifeExperienceInd in _population.droids){
 		
@@ -44,7 +59,8 @@ function processGA(_population, secondsInSimPerDroid, numberOfEvolutions, curren
 			let droidNumber = parseInt(lifeExperienceInd)+1;
 			let droidButton = '<a href="#" onClick="loadDroidFromPopulation('+lifeExperienceInd+')">Load</div>';
 			
-			document.getElementById('simLog').innerHTML += "<div>Droid: "+ droidNumber +" | Travelled: "+lifeExperience.travelledDistance.toFixed(2).toString()+" | "+ droidButton +"</div>";
+			// This log panel has changed but lets keep this code for now
+			//document.getElementById('simLog').innerHTML += "<div>Droid: "+ droidNumber +" | Travelled: "+lifeExperience.travelledDistance.toFixed(2).toString()+" | "+ droidButton +"</div>";
 		}
 	}
 	
@@ -231,6 +247,10 @@ function evalutateEvolution(_population, secondsInSimPerDroid, numberOfEvolution
 		setTimeout( function(){
 			
 			document.getElementById('gaLog').innerHTML += "- All evolutions completed!";
+			
+			setTimeout( function(){
+				alert('Droid evolution completed!');
+			}, 2000);
 
 		},500);
 	}
