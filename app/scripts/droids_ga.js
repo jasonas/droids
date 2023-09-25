@@ -3,6 +3,12 @@
 // Start the Genetic Algorithm
 function runGA(){
 	
+	if(evoInProgress==true){
+		return;
+	}
+	
+	evoInProgress=true;
+	
 	// Get the settings from the UI
 	let populationSize = parseInt(document.getElementById('popSize').value);
 	let secondsInSimPerDroid = parseInt(document.getElementById('trialSeconds').value);
@@ -109,6 +115,8 @@ function processGA(_population, secondsInSimPerDroid, numberOfEvolutions, curren
 					// Evolution completed
 					console.log("Evolution completed: "+currentEvolution)
 					evalutateEvolution(_population, secondsInSimPerDroid, numberOfEvolutions, currentEvolution);
+					
+					evoInProgress=false;
 				}
 				   
 			},500);

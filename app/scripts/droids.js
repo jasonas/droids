@@ -14,11 +14,17 @@ var droidRobot;
 var memoryStore_droidPopulation = []; 
 var memoryStore_eliteDroids = []; 
 
+// Sim state
+var evoInProgress = false;
 
 ///////////////////  Quick View Functions /////////////////////////
 
 // Make and load a droid from a set of example base genes
 function makeDroidBase(){
+	
+	if(evoInProgress==true){
+		return;
+	}
 	
 	if(startedAmmo == true){
 		reset();
@@ -48,6 +54,10 @@ function makeDroidBase(){
 
 // Make and load a droid from a completely random set of genes
 function makeDroidRandom(){
+	
+	if(evoInProgress==true){
+		return;
+	}
 	
 	if(startedAmmo == true){
 		reset();
@@ -113,6 +123,7 @@ function exportDroid(){
 	if( !droidRobot){
 	   alert("No Droid created yet");
 	} else {
+		alert("Note.. this feature currently only works with bipedal Droids");
 		droidRobot.toXml(true);
 	}
 }
@@ -146,6 +157,11 @@ function xmlParser(e, file){
 }
 
 function importDroid(){
+	
+	if(evoInProgress==true){
+		return;
+	}
+	
 	document.getElementById('importFile').click();
 }
 
@@ -163,6 +179,10 @@ function importedXML(e){
 
 // CSV export
 function exportGenome(){
+	
+	if(evoInProgress==true){
+		return;
+	}
 	
 	if( !droidRobot){
 	   alert("No Droid created yet");
@@ -201,6 +221,11 @@ function csvParser(e, file){
 }
 
 function importGenome(){
+	
+	if(evoInProgress==true){
+		return;
+	}
+	
 	document.getElementById('importGenome').click();
 }
 
