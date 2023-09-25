@@ -3,7 +3,7 @@
 <head>
 	<!--
 
-	Droids.ai v0.0.1 | September 2023
+	Droids.ai v0.0.1 | September 3003
 
 	-->
 	<meta charset="utf-8">
@@ -22,17 +22,17 @@
 	<script src="./third_party_libs/ammo/ammo.js"></script>
 	
 	<!-- Droids scripts  -->
-	<script src="./scripts/droids.js?v=200"></script>
-	<script src="./scripts/droids_renderer.js?v=200"></script>
-	<script src="./scripts/droids_ga.js?v=200"></script>
+	<script src="./scripts/droids.js?v=300"></script>
+	<script src="./scripts/droids_renderer.js?v=300"></script>
+	<script src="./scripts/droids_ga.js?v=300"></script>
 	
 	<!-- Droid classes  -->
-	<script src="./scripts/classes/droid_genome.js?v=200"></script>
-	<script src="./scripts/classes/droid_robot.js?v=200"></script>
-	<script src="./scripts/classes/droid_population.js?v=200"></script>
+	<script src="./scripts/classes/droid_genome.js?v=300"></script>
+	<script src="./scripts/classes/droid_robot.js?v=300"></script>
+	<script src="./scripts/classes/droid_population.js?v=300"></script>
 	
 	<!-- Droids styles -->
-	<link type="text/css" rel="stylesheet" href="./css/styles.css?v=200">
+	<link type="text/css" rel="stylesheet" href="./css/styles.css?v=300">
 	
 </head>
 <body>
@@ -78,9 +78,9 @@
 					<span class="col_1">Trail time:</span>
 					<span class="col_2"><input type="number" id="trialSeconds" name="trialSeconds" value="20"> Seconds cap</span>
 				</div>
-				<div class="row">
+				<div class="row" style="opacity: 0.2">
 					<span class="col_1">Trial distance:</span>
-					<span class="col_2"><input type="number" id="trialDistance" name="trialDistance" value="30" disabled> Feet cap</span>
+					<span class="col_2"><input type="number" id="trialDistance" name="trialDistance" value="30" disabled> Capped</span>
 				</div>
 				<div class="row">
 					<span class="col_1">Evolutions:</span>
@@ -90,7 +90,7 @@
 					<span class="col_1">Trials end by:</span>
 					<span class="col_2">
 						Time <input type="radio" id="trialEndTime" name="trialEnd" checked> &nbsp;
-						Dist <input type="radio" id="trialEndDist" name="trialEnd" disabled>
+						<span style="opacity: 0.2">Dist</span> <input type="radio" id="trialEndDist" name="trialEnd" disabled style="opacity: 0.2">
 					</span>
 				</div>
 				<div class="note">* Distance is used to end trials if 'Dist' is selected for the 'end by'. Trials end if they exceed the max-time regardless.</div>

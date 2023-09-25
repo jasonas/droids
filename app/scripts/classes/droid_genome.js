@@ -745,19 +745,15 @@ class URDFJointElement{
 		axis_tag.setAttribute("xyz", this.axis_xyz);
 		
 		let limit_tag = adom.createElement("limit");
-		
 		limit_tag.setAttribute("effort", "10");
-		
 		limit_tag.setAttribute("lower", this.limit_lower);
-		
 		limit_tag.setAttribute("upper", this.limit_upper);
-		
 		limit_tag.setAttribute("velocity", this.limit_velocity);
 		
 		let origin_tag = adom.createElement("origin");
 		origin_tag.setAttribute("rpy", "0.0 0.0 0.0");
 		origin_tag.setAttribute("xyz", this.origin_xyz);
-		
+
 		joint_tag.appendChild(parent_tag);
         joint_tag.appendChild(child_tag);
         joint_tag.appendChild(axis_tag);
